@@ -1,4 +1,12 @@
 //crud.js
+const PermissionMiddleware = require('../middlewares/auth.permission.middleware');
+const ValidationMiddleware = require('../middlewares/auth.validation.middleware');
+const config = require('../config/env.config');
+
+const ADMIN = config.permissionLevels.ADMIN;
+const PAID = config.permissionLevels.PAID_USER;
+const FREE = config.permissionLevels.NORMAL_USER;
+
 
 const express = require('express');
 
@@ -82,12 +90,31 @@ module.exports = (Collection) => {
 
   let router = express.Router();
 
-  router.post('/', create);
-  router.get('/', readMany);
-  router.get('/:_id', readOne);
-  router.put('/:_id', update);
-  router.delete('/:_id', remove);
-
+  router.post('/', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    create
+  ]);
+  router.get('/', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    readMany
+  ]);
+  router.get('/:_id', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    readOne
+  ]);
+  router.put('/:_id', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    update
+  ]);
+  router.delete('/:_id', [
+    ValidationMiddleware.validJWTNeeded,
+    PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+    remove
+  ]);
   return router;
 
 }
