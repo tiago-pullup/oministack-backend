@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 const AuthorizationRouter = require('./authorization/routes.config');
 const UsersRouter = require('./users/routes.config');
+const Payments = require('./users/models/Payments.model')
+
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -24,6 +26,7 @@ app.use(bodyParser.json());
 AuthorizationRouter.routesConfig(app);
 UsersRouter.routesConfig(app);
 
+app.use('/api/payments', require('./common/utils/crud')(Payments));
 
 app.listen(config.port, function () {
     console.log('app listening at port %s', config.port);
