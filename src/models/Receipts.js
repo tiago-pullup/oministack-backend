@@ -1,7 +1,7 @@
 const mongoose = require('../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
-const PaymentSchema = new Schema({
+const Receiptschema = new Schema({
     date: Date,
     value: Number,
     description: String,
@@ -12,4 +12,4 @@ const PaymentSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Payments', PaymentSchema)
+module.exports = mongoose.model('Receipts', Receiptschema)

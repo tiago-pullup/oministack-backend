@@ -1,10 +1,10 @@
-const config = require('./src/common/config/env.config.js');
+const config = require('./common/config/env.config.js');
 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const Routes = require('./src/routes')
+const Routes = require('./routes')
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

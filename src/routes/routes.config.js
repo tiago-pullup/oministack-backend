@@ -19,7 +19,7 @@ exports.routesConfig = function (app) {
     app.get('/users/:userId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
-        //PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+        PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         UsersController.getById
     ]);
     app.patch('/users/:userId', [

@@ -31,8 +31,11 @@ module.exports = (Collection) => {
   // Read many
   // =========
   const readMany = (req, res) => {
-    let query = res.locals.query || {};
-  
+    let query = req.query || {};
+    const _collection = Collection
+    Object.keys(query).map((key, index) => {
+      query[key] = _collection.schema.obj[key] && Collection.schema.obj[key].name == 'String' ? { $regex : '.*' + query[key] + '.*' } : query[key];
+    });
     Collection.find(query, (e,result) => {
       if(e) {
         res.status(500).send(e);
