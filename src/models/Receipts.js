@@ -6,6 +6,7 @@ const Receiptschema = new Schema({
     value: Number,
     description: String,
     balance: Number,
+    status: Number,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
